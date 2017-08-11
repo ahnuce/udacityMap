@@ -46,7 +46,22 @@ var markers = [];
         populateInfoWindow(this, largeInfowindow);
       });
     }
-        map.fitBounds(bounds);
+    //This function will loop through the markers array and display them all
+    function showListings(){
+      var bounds = new google.maps.LatLngBounds();
+      for (var i = 0; i < markers.length; i++){
+        markers[i].setMap(map);
+        bounds.extend(markers[i].position);
+      }
+      map.fitBounds(bounds);
+    }
+    //This function will loop through the listings and hide them al
+    function hideListings(){
+      for (var i = 0; i < markers.length; i++){
+        markers[i]. setMap(null);
+      }
+    }
+
 
     function populateInfoWindow(marker, infowindow){
       //check to make sure the infowindow is not already opened on this marker.
@@ -60,11 +75,20 @@ var markers = [];
         });
       }
     }
-    // var infoWindow = new google.maps.InfoWindow({
-    //   content: 'Do you ever feel like an InfoWindow, floating through the wind,' + 'ready to start again?'
-    // });
-    // marker.addListener('click', function(){
-    //   infoWindow.open(map,marker);
-  //   });
-  //
+
+    document.getElementById('show-listings').addEventListener('click', showListings);
+    document.getElementById('hide-listings').addEventListener('click', hideListings);
+
 };
+
+
+
+
+
+// var infoWindow = new google.maps.InfoWindow({
+//   content: 'Do you ever feel like an InfoWindow, floating through the wind,' + 'ready to start again?'
+// });
+// marker.addListener('click', function(){
+//   infoWindow.open(map,marker);
+//   });
+//
