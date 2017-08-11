@@ -1,4 +1,6 @@
 var map;
+var googleKey = config.GOOGLE_KEY;
+
 //create a new blank array for all the listing markers.
 var markers = [];
   function initMap() {
