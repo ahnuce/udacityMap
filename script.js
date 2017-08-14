@@ -1,5 +1,5 @@
 var map;
-var googleKey = config.GOOGLE_KEY;
+
 
 //create a new blank array for all the listing markers.
 var markers = [];
@@ -27,6 +27,9 @@ var markers = [];
     ];
     var largeInfowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
+    //styling for the markers
+    var defaultIcon = makeMarkerIcon('0091ff');
+    var highlightedIcon = makeMarkerIcon('FFFF24');
     //the following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++){
       var position = locations[i].location;
@@ -36,6 +39,7 @@ var markers = [];
         map: map,
         position: position,
         title: title,
+        icon: defaultIcon,
         animation: google.maps.Animation.DROP,
         id: i
       });
@@ -46,6 +50,12 @@ var markers = [];
       //create an onclick event to open an infowindow at each marker.
       marker.addListener('click', function(){
         populateInfoWindow(this, largeInfowindow);
+      marker.addListener('mouseover', function(){
+        this.setIcon(highlightedIcon);
+      });
+      marker.addListener('mouseout', function(){
+        this.setIcon(defaultIcon);
+      })
       });
     }
     //This function will loop through the markers array and display them all
@@ -83,7 +93,15 @@ var markers = [];
 
 };
 
-
+function makeMarkerIcon (markerColor){
+  var markerImage = new google.maps.MarkerImage(
+    'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2',
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0, 0),
+    new google.maps.Point(10, 34),
+    new google.maps.Size(21, 34));
+    return markerImage;
+}
 
 
 
